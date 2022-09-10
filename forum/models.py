@@ -2,14 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
-STATUS = ((0, "Draft"), (1, "Published"))
+
+
+STATUS = ((0, "Draft"), (1, "Approved"))
 
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="forum_posts")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="forum_posts")
     updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()
+    song_rock = models.BooleanField(default=False)
+    song_pop = models.BooleanField(default=False)
+    song_country = models.BooleanField(default=False)
     featured_image = CloudinaryField('image', default='placeholder')
     excerpt = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now=True)
@@ -27,6 +33,7 @@ class Post(models.Model):
 
     def number_of_likes(self):
         return self.likes.count()
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE,
