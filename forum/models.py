@@ -29,7 +29,7 @@ class Post(models.Model):
                                 blank=True)
 
     class Meta:
-        ordering = ["-created_on"]
+        ordering = ['-created_on']
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -52,7 +52,7 @@ class Comment(models.Model):
     approved = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["created_on"]
+        ordering = ['created_on']
 
     def __str__(self):
         return f"Comment {self.body} by {self.name}"
@@ -66,6 +66,7 @@ class Profile(models.Model):
     favorite_song = models.TextField(max_length=100, blank=True)
 
     # Create user profile upon user registration
+    @receiver(post_save, sender=User)
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
