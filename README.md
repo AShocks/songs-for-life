@@ -1,1 +1,3 @@
 # PP4 Milestone Project
+
+I realise that I have little of a project to submit and no README also but I felt it would be courteous to send a few lines and deploy before the deadline. I spent many hours working on this project but in the end everything went against me. In the end I planned to do a workthrough of the sample Blog walkthrough and work on it from there but time is against me. I hope to rectify all this in tha resubmission. Thank You.
