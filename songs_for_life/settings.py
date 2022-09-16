@@ -26,9 +26,11 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["songsforlife.herokuapp.com", "localhost"]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Application definition
 
@@ -46,7 +48,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # 'django_summernote',
+    'django_summernote',
     'forum',
 ]
 
@@ -91,7 +93,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'codestar.wsgi.application'
+WSGI_APPLICATION = 'songs_for_life.wsgi.application'
 
 
 # Database
@@ -113,13 +115,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.%s' % validator}
-    for validator in [
-        'UserAttributeSimilarityValidator',
-        'MinimumLengthValidator',
-        'CommonPasswordValidator',
-        'NumericPasswordValidator',
-    ]
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 
