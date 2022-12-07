@@ -29,6 +29,7 @@ class PostDetail(View):
             {
                 "post": post,
                 "comments": comments,
+                "commented": False,
                 "liked": liked,
                 "comment_form": CommentForm()
             },
@@ -44,6 +45,7 @@ class PostDetail(View):
             liked = True
 
         comment_form = CommentForm(data=request.POST)
+        
         if comment_form.is_valid():
             comment_form.instance.email = request.user.email
             comment_form.instance.name = request.user.username
