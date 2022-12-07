@@ -1,19 +1,20 @@
 from django.shortcuts import render, get_object_or_404, reverse
-from django.views import generic, View
+from django.views import generic, View 
 from django.http import HttpResponseRedirect
 from .models import Post
 from .forms import CommentForm
 
 
 class PostList(generic.ListView):
+    """Displays The Post List page"""
     model = Post
-    queryset = Post.objects.filter(status=1).order_by("-created_on")
+    queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = "index.html"
     paginate_by = 6
 
 
 class PostDetail(View):
-
+    """Displays Post Detail page"""
     def get(self, request, slug, *args, **kwargs):
         queryset = Post.objects.filter(status=1)
         post = get_object_or_404(queryset, slug=slug)
@@ -28,12 +29,10 @@ class PostDetail(View):
             {
                 "post": post,
                 "comments": comments,
-                "commented": False,
-                "liked": liked,
-                "comment_form": CommentForm()
+                "liked": liked
             },
         )
-    
+        
     def post(self, request, slug, *args, **kwargs):
 
         queryset = Post.objects.filter(status=1)
