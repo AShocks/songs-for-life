@@ -7,6 +7,9 @@ STATUS = ((0, "Draft"), (1, "Published"))
 
 
 class Post(models.Model):
+    """
+    stores the Post data
+    """
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(
@@ -22,16 +25,28 @@ class Post(models.Model):
         User, related_name='forumpost_like', blank=True)
 
     class Meta:
+        """
+        orders the post on the created_on field in decending order
+        """
         ordering = ["-created_on"]
 
     def __str__(self):
+        """
+        return a string representation of an object
+        """
         return self.title
 
     def number_of_likes(self):
+        """
+        total number of likes on a post
+        """
         return self.likes.count()
 
 
 class Comment(models.Model):
+    """
+    store comment data
+    """
     post = models.ForeignKey(Post, on_delete=models.CASCADE,
                              related_name="comments")
     name = models.CharField(max_length=80)
@@ -41,7 +56,13 @@ class Comment(models.Model):
     approved = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["created_on"]
+        """
+        order the comments on the created_on field in ascending order
+        """
+        ordering = ['created_on']
 
     def __str__(self):
+        """
+        return a string of the comment made by the user
+        """
         return f"Comment {self.body} by {self.name}"
