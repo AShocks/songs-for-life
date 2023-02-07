@@ -15,7 +15,7 @@ class PostList(generic.ListView):
 
 class PostDetail(View):
     """ Displays the PostList views """
-    
+
     def get(self, request, slug, *args, **kwargs):
         """
         Render the posts with details according to their unique title

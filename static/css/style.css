@@ -1,6 +1,14 @@
 body {
     background-color: #F9FAFC;
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
+
+main {
+    flex: 1;
+  }
 
 .brand {
     font-family: Lato, sans-serif;
@@ -21,19 +29,26 @@ body {
     background-color: #F9FAFC;
 }
 
-.hero-container {
-    height: 80vh;
+
+.hero_image {
+    width: 100%;
+    height: 50vh;
     background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
-    background-position: bottom center;
-    display: flex;
-    align-items: center;
+    margin: 0;
+    position: relative;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
 }
 
 
-.btn-signup {
-    background-color: #445261;
-    color: #fff;
-}
+
+
+
 
 
