@@ -6,9 +6,9 @@ from .models import Post, Comment
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
     """
-    Customise the admin panel, use summernote for the blog content
+    Customise the admin panel, use summernote for the forum content
     """
-    list_display = ('title', 'slug', 'status', 'created_on')
+    list_display = ('title', 'author', 'slug', 'status', 'created_on')
     search_fields = ['title', 'content']
     list_filter = ('status', 'created_on')
     prepopulated_fields = {'slug': ('title',)}
@@ -16,7 +16,10 @@ class PostAdmin(SummernoteModelAdmin):
     actions = ['approve_posts']
 
     def approve_post(self, request, queryset):
-        queryset.update(status=1)
+        """
+        Method to approve posts
+        """
+        queryset.update(appoved=True)
 
 
 @admin.register(Comment)
