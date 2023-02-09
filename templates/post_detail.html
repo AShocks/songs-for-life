@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<!-- post details page with comment section below -->
+<div class="masthead">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-md-6 masthead-text text-white post-title-author">
+                <h1 class="post-title">
+                    {{ post.title }}
+                </h1>
+                <small class="post-subtitle">By: {{ post.author }} | {{ post.created_on }} </small>
+                {% if user.is_authenticated %}
+                {% if user.id == post.author.id %}
+                <!-- only logged in user and the post author can update or delete their own post -->
+
+                <div class="container d-flex flex-row-reverse">
+                    <!-- update post button -->
+                    <a href="{% url 'update_post' post.slug %}" class="p-2">
+                        <button type="button" class="btn btn-outline-success edit-btn">Update</button>
+                    </a>
+
+                    <!-- delete post button -->
+                    <a href="{% url 'delete_post' post.slug %}" class="p-2">
+                        <button type="button" class="btn btn-outline-danger delete-btn">Delete</button>
+                    </a>
+                </div>
+
+                {% endif %}
+                {% endif %}
+            </div>
+            <!-- placeholder img taken from code institute only showing when the user didn't upload their own img-->
+            <div class="d-none d-md-block col-md-6 masthead-image">
+                {% if "placeholder" in post.image.url %}
+                <img class="card-img-top post-img img-fluid"
+                 src="https://res.cloudinary.com/dahw9emjc/image/upload/v1675920120/concert_vqe6wc.jpg" class="image-fluid"
+                 width="100%" height="250" alt="NFT image">
+                {% else %}
+                <img src=" {{ post.image.url }} " class="card-img-top post-img img-fluid" width="100%" height="250"
+                    alt="An uploaded image from the user">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- comment section -->
+<div class="container">
+    <div class="row">
+        <div class="col card mt-3 left top">
+            <div class="card-body">
+                <p class="card-text text-justify"> {{ post.content | safe }} </p>
+                <div class="row col-md-6 col-lg-5">
+                    <div class="col-2 p-0">
+                        <strong>
+                            {% if user.is_authenticated %}
+
+                            <form class="d-inline" action="{% url 'forumpost_like' post.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if liked %}
+
+                                <button type="submit" name="forumpost_id" value="{{ post.slug }}" class="btn-like"><i
+                                        class="fa-solid fa-heart-circle-check"></i></button>
+
+                                {% else %}
+
+                                <button type="submit" name="forumpost_id" value="{{ post.slug }}" class="btn-like"><i
+                                        class="fa-solid fa-heart"></i></button>
+
+                                {% endif %}
+                            </form>
+                            {% else %}
+                            <span class="text-secondary"><i class="fa-solid fa-heart"></i></span>
+                            {% endif %}
+                            <span class="text-secondary">{{ post.number_of_likes }}</span>
+                        </strong>
+                    </div>
+                    <div class="col-2 p-0">
+                        {% with comments.count as total_comments %}
+                        <strong class="text-secondary"><i class="far fa-comments"></i>
+                            {{ total_comments }}
+                        </strong>
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <hr>
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+    <!-- when the user is logged in, this section will display otherwise is hidden -->
+    <div class="row d-flex card-bg">
+        <div class="card p-2 card-bg">
+            <h3>Comments:</h3>
+            <div class="card-body">
+                <!-- for loop inside the tags to iterate through each comment in comments -->
+                {% for comment in comments %}
+                <div class="comments p-1">
+                    <p class="font-weight-bold text-justify">
+                        {{ comment.name }}
+                        <span class="font-weight-normal card-bg">
+                            {{ comment.created_on }}
+                        </span> wrote:
+                    </p>
+                    {{ comment.body | linebreaks }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card mb-4 mt-1 card-bg">
+            <div class="card-body mt-3 pt-0 pb-4">
+
+                <h3>Tell us what you think:</h3>
+                <p class="text-justify">Posted by {{ user.username }}</p>
+                <form method="POST">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-dark btn-lg mt-2">Submit</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

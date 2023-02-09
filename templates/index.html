@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="container-fluid">
-    <div class="image-container">
+    <div class="row image-container">
         <img class="card-img-top"
             src="https://res.cloudinary.com/dahw9emjc/image/upload/v1670468012/hero_image_nj7vhi.jpg"
                 alt="Image of Record collection">
@@ -42,7 +42,7 @@
                                 <p class="author">Author: {{ post.author }}</p>
                             </div>
                         </div>
-                        <a href="#" class="post-link">
+                        <a href="% url 'post_detail' post.slug %}" class="post-link">
                             <h2 class="card-title">{{ post.title }}</h2>
                             <p class="card-text">{{ post.excerpt }}</p>
                         </a>
