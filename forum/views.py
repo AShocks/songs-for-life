@@ -9,12 +9,12 @@ class PostList(generic.ListView):
     """ Displays the PostList views """
     model = Post
     queryset = Post.objects.filter(status=1).order_by("-created_on")
-    template_name = "post_list.html"
+    template_name = 'index.html'
     paginate_by = 6
 
 
 class PostDetail(View):
-    """ Displays the PostList views """
+    """ Displays the PostDetail views """
 
     def get(self, request, slug, *args, **kwargs):
         """
