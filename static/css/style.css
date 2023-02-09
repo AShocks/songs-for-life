@@ -30,22 +30,14 @@ main {
 }
 
 
-.hero_image {
-    width: 100%;
-    height: 50vh;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    margin: 0;
-    position: relative;
-}
+
 
 .image-container {
     height: 80vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom center;
-    display: flex;
+    
     align-items: center;
     position: relative;
   }
