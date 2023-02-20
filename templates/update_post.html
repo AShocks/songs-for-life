@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% load static %}
+
+{% if user.is_authenticated %}
+{% if user.id == post.author.id or user.is_superuser %}
+
+<!-- update post page -->
+<div class="container">
+    <div class="row text-white">
+        <div class="col-12 col-md-8 offset-md-2">
+            <h1 class="text-center">Update Post</h1>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <form method="POST" class="edit-post mt-2" action="{% url 'update_post' post.slug %}">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <div class="text-center mt-3 mb-3">
+                        <a href="{% url 'update_post' post.slug %}">
+                            <button type="submit" class="btn btn-lg center btn-info">Submit</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% else %}
+Access Denied!
+{% endif %}
+{% else %}
+Access Denied!
+
+{% endif %}
+
+{% endblock %}

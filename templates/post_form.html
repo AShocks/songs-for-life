@@ -4,3 +4,21 @@
 {% block content %}
 
 {% endblock %}
+
+    <div class="container post-form mt-3 pb-3">
+        <div class="row">
+            <div class="col-md-8 mt-3 offset-md-2">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Forum Post</legend>
+                        {{ form | crispy | safe }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-signup right" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
