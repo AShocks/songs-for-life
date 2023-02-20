@@ -10,6 +10,11 @@ def index(request):
     return render(request, 'index.html')
 
 
+def about(request):
+    """ Returns about.html """
+    return render(request, 'about.html')
+
+
 class PostList(generic.ListView):
     """ Displays the PostList views """
     model = Post
