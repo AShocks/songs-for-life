@@ -9,7 +9,7 @@ class PostList(generic.ListView):
     """ Displays the PostList views """
     model = Post
     queryset = Post.objects.filter(status=1).order_by("-created_on")
-    template_name = 'index.html'
+    template_name = 'post_list.html'
     paginate_by = 6
 
 

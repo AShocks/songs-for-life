@@ -31,32 +31,26 @@
                 <p class="card-text ">
                     {{ post.content | safe }}
                 </p>
-                <div class="row">
+                <div class="row text-nowrap">
 
-                    <div class="col-1">
-                        <!-- The number of likes goes before the closing strong tag -->
+                    <div class="col-2">
+                            <form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if liked %}
 
-                        {% if user.is_authenticated %}
-                                <form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
-                                    {% csrf_token %}
-                                    {% if liked %}
+                                <button type="submit" name="forumpost_id" value="{{post.slug}}" class="btn-like">
+                                    <i class="fas fa-heart"></i>
+                                </button>
 
-                                    <button type="submit" name="forumpost_id" value="{{post.slug}}" class="btn-like"><i
-                                            class="fas fa-heart"></i></button>
-
-                                    {% else %}
-
-                                    <button type="submit" name="forumpost_id" value="{{post.slug}}" class="btn-like"><i
-                                            class="far fa-heart"></i></button>
-
-                                    {% endif %}
-                                </form>
                                 {% else %}
+                                <button type="submit" name="forumpost_id" value="{{post.slug}}" class="btn-like">
+                                    <i class="far fa-heart"></i>
+                                </button>
 
-                                <span class="text-secondary"><i class="far fa-heart"></i></span>
                                 {% endif %}
-                                <span class="text-secondary"> {{ post.number_of_likes }}</span>
-                        <strong class="text-secondary"><i class="far fa-heart"></i> {{ post.number_of_likes }} </strong>
+
+                            </form>
+                            <span class="text-secondary">{{ post.number_of_likes }} </span>
                     </div>
                     <div class="col-1">
                         {% with comments.count as total_comments %}
@@ -96,7 +90,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="col-md-4 card mb-4  mt-3 ">
+        <div class="col-md-4 card mb-4  mt-3">
             <div class="card-body">
                 <!-- For later -->
                 {% if commented %}
@@ -104,16 +98,15 @@
                     Your comment is awaiting approval
                 </div>
                 {% else %}
-                {% if user.is_authenticated %}
+
 
                 <h3>Leave a comment:</h3>
                 <p>Posting as: {{ user.username }}</p>
                 <form method="post" style="margin-top: 1.3em;">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-signup btn-lg">Submit</button>
+                    <button type="submit" class="btn btn-success btn-lg bg-gradient mt-1">Submit</button>
                 </form>
-                {% endif %}
                 {% endif %}
             </div>
         </div>
