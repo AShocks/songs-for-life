@@ -5,6 +5,11 @@ from .models import Post
 from .forms import CommentForm
 
 
+def index(request):
+    """ Returns index.html """
+    return render(request, 'index.html')
+
+
 class PostList(generic.ListView):
     """ Displays the PostList views """
     model = Post
