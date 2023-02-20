@@ -53,6 +53,19 @@ main {
     color: #fff;
 }
 
+.about-page-image {
+    padding-top: 10px;
+    padding-bottom: 100px;
+}
+
+.about-page-text {
+    text-align: justify;
+}
+
+.about-page-text h2 {
+    padding-top: 10px;
+    text-align: center;
+}
 
 
 
