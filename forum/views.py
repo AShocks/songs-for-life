@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from .models import Post
 from .forms import CommentForm
 
@@ -91,3 +94,24 @@ class PostLike(View):
             post.likes.add(request.user)
 
         return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+
+
+class CreatePost(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+    """
+    View for creating a new post if the user is logged in
+    """
+    model = Post
+    template_name = 'create_post.html'
+    fields = ['title', 'content', 'featured_image', 'excerpt']
+    success_url = reverse_lazy('home')
+    success_message = ('New post created successfully')
+    
+
+    def form_valid(self, form):
+        """
+        Sets the logged in user as author field in form
+        """
+        form.instance.author = self.request.user
+        return super(CreatePost, self).form_valid(form)
+
+
