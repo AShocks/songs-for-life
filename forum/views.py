@@ -105,7 +105,6 @@ class CreatePost(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     fields = ['title', 'content', 'featured_image', 'excerpt']
     success_url = reverse_lazy('home')
     success_message = ('New post created successfully')
-    
 
     def form_valid(self, form):
         """
@@ -115,3 +114,10 @@ class CreatePost(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         return super(CreatePost, self).form_valid(form)
 
 
+class UpdatePost(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
+
+    model = Post
+    template_name = 'update_post.html'
+    fields = ['title', 'content', 'featured_image', 'excerpt']
+    success_url = reverse_lazy('home')
+    success_message = "You have successfully updated the post"
