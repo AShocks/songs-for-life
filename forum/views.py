@@ -115,9 +115,22 @@ class CreatePost(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
 
 class UpdatePost(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
+    """
+    View for updating/editing a post
+    """
 
     model = Post
     template_name = 'update_post.html'
     fields = ['title', 'content', 'featured_image', 'excerpt']
     success_url = reverse_lazy('home')
     success_message = "You have successfully updated the post"
+
+
+class DeletePost(SuccessMessageMixin, LoginRequiredMixin, generic.DeleteView):
+    """
+    View for deleting a post
+    """
+
+    model = Post
+    success_url = reverse_lazy('home')
+    success_message = "Post successfully deleted"
