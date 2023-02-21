@@ -6,7 +6,7 @@
         <div class=" col text-center">
             <h2>Posts</h2>
         </div>
-
+    </div>
         <div class="row">
             <!-- Posts Column -->
             <div class="col-12 mt-3 left">
@@ -26,7 +26,13 @@
                                         alt="image posted by the user">
                                     {% endif %}
                                 </div>
-                                
+                                <hr>
+                                <div>
+                                    <p class="postlist-footer card-footer">posted by {{ post.author }} on
+                                        {{ post.created_on}}</p>
+                                    <i class="far fa-heart">{{ recipe.number_of_favourites }}</i>
+                                    <i class="far fa-comments" aria-hidden="true"> {{ post.number_of_likes }} </i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -41,19 +47,7 @@
             </div>
         </div>
     </div>
-    {% if is_paginated %}
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
-            {% endif %}
-            {% if page_obj.has_next %}
-            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
-
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
+    
 
 </div>
 

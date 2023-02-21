@@ -30,7 +30,7 @@ main {
 }
 
 
-
+/* Postlist images */
 
 .image-container {
     height: 80vh;
@@ -38,9 +38,14 @@ main {
     background-size: cover;
     background-position: bottom center;
     
+    
     align-items: center;
     position: relative;
   }
+
+  .card {
+    margin-bottom: 15px;
+}
 
 .card-img-top {
     width: 100%;
