@@ -38,15 +38,16 @@
             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link active"  href="{% url 'about' %}">About</a>
+            <a class="nav-link active" aria-current="page"  href="{% url 'about' %}">About</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link active"  href="{% url 'home' %}">Forum</a>
+            <a class="nav-link active" aria-current="page"  href="{% url 'posts' %}">Forum</a>
             </li>
-          <li class="nav-item ">
-            <a class="nav-link active"  href="{% url 'home' %}">My Songs</a>
-          </li>
+
           {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'create_post' %}">Add a Post</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account_logout' %}">Sign Out</a>
           </li>

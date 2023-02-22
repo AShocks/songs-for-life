@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
+from django.contrib import messages
 from .models import Post
 from .forms import CommentForm
+
 
 
 def index(request):
@@ -96,41 +99,66 @@ class PostLike(View):
         return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
 
-class CreatePost(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class CreatePost(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     """
     View for creating a new post if the user is logged in
     """
     model = Post
-    template_name = 'create_post.html'
+    template_name = 'post_form.html'
     fields = ['title', 'content', 'featured_image', 'excerpt']
     success_url = reverse_lazy('home')
-    success_message = ('New post created successfully')
+    success_message = ('New post successfully created ')
 
     def form_valid(self, form):
         """
         Sets the logged in user as author field in form
         """
         form.instance.author = self.request.user
-        return super(CreatePost, self).form_valid(form)
+        return super().form_valid(form)
 
 
-class UpdatePost(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
+class UpdatePost(SuccessMessageMixin, LoginRequiredMixin,
+                 UserPassesTestMixin, UpdateView):
     """
     View for updating/editing a post
     """
 
     model = Post
-    template_name = 'update_post.html'
+    template_name = 'post_form.html'
     fields = ['title', 'content', 'featured_image', 'excerpt']
     success_url = reverse_lazy('home')
     success_message = "You have successfully updated the post"
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
-class DeletePost(SuccessMessageMixin, LoginRequiredMixin, generic.DeleteView):
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+
+class DeletePost(LoginRequiredMixin, UserPassesTestMixin,
+                 DeleteView, SuccessMessageMixin):
     """
     View for deleting a post
     """
 
     model = Post
+    template_name = 'confirm_delete_post.html'
     success_url = reverse_lazy('home')
     success_message = "Post successfully deleted"
+
+    def test_func(self):
+        """ function to check if the user is the post author """
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+    def delete(self, request, *args, **kwargs):
+        """ function to display the message after the post is deleted """
+        messages.success(self.request, self.success_message)
+        return super(DeletePost, self).delete(request, *args, **kwargs)
