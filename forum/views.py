@@ -10,7 +10,6 @@ from .models import Post
 from .forms import CommentForm
 
 
-
 def index(request):
     """ Returns index.html """
     return render(request, 'index.html')
