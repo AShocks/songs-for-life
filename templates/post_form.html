@@ -3,15 +3,14 @@
 
 {% block content %}
 
-{% endblock %}
-
-    <div class="container post-form mt-3 pb-3">
-        <div class="row">
-            <div class="col-md-8 mt-3 offset-md-2">
+<section>
+    <div class="ms-2 me-2">
+        <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+            <div class="create-post">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <fieldset class="form-group">
-                        <legend class="border-bottom mb-4">Forum Post</legend>
+                        <legend class="border-bottom mb-4">Add a Post</legend>
                         {{ form | crispy | safe }}
                     </fieldset>
                     <div class="form-group">
@@ -21,4 +20,9 @@
             </div>
         </div>
     </div>
-    </div>
+</section>
+
+    
+    
+
+{% endblock %}

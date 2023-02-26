@@ -98,7 +98,7 @@ class PostLike(View):
         return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
 
-class CreatePost(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class CreatePost(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     """
     View for creating a new post if the user is logged in
     """
@@ -113,7 +113,8 @@ class CreatePost(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         Sets the logged in user as author field in form
         """
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        form.instance.status = 1
+        return super(CreatePost, self).form_valid(form)
 
 
 class UpdatePost(SuccessMessageMixin, LoginRequiredMixin,
