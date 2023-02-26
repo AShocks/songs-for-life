@@ -8,9 +8,9 @@ urlpatterns = [
     path('posts/', views.PostList.as_view(), name='posts'),
     path('createpost/', views.CreatePost.as_view(), name='create_post'),
     path('updatepost/<slug:slug>', views.UpdatePost.as_view(),
-         name='updatepost'),
+         name='update_post'),
     path('deletepost/<slug:slug>', views.DeletePost.as_view(),
-         name='deletepost'),
+         name='delete_post'),
     path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
     path('like/<slug:slug>', views.PostLike.as_view(), name='post_like'),
 ]
