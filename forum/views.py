@@ -1,9 +1,8 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
-from django.views.generic import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .models import Post
@@ -25,6 +24,7 @@ class PostList(generic.ListView):
     model = Post
     queryset = Post.objects.filter(status=1).order_by("-created_on")
     template_name = 'post_list.html'
+    
 
 
 class PostDetail(LoginRequiredMixin, View):
@@ -97,7 +97,8 @@ class PostLike(View):
         return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
 
-class CreatePost(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class CreatePost(
+                LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     """
     View for creating a new post if the user is logged in
     """
@@ -113,11 +114,10 @@ class CreatePost(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         """
         form.instance.author = self.request.user
         form.instance.status = 1
-        return super(CreatePost, self).form_valid(form)
+        return super().form_valid(form)
 
 
-class UpdatePost(SuccessMessageMixin, LoginRequiredMixin,
-                 UserPassesTestMixin, UpdateView):
+class UpdatePost(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
     """
     View for updating/editing a post
     """
@@ -139,8 +139,7 @@ class UpdatePost(SuccessMessageMixin, LoginRequiredMixin,
         return False
 
 
-class DeletePost(LoginRequiredMixin, UserPassesTestMixin,
-                 DeleteView, SuccessMessageMixin):
+class DeletePost(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
     """
     View for deleting a post
     """
@@ -160,4 +159,4 @@ class DeletePost(LoginRequiredMixin, UserPassesTestMixin,
     def delete(self, request, *args, **kwargs):
         """ function to display the message after the post is deleted """
         messages.success(self.request, self.success_message)
-        return super(DeletePost, self).delete(request, *args, **kwargs)
+        return super().delete(request, *args, **kwargs)
