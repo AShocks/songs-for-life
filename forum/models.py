@@ -4,6 +4,7 @@ from cloudinary.models import CloudinaryField
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 
+
 STATUS = ((0, "Draft"), (1, "Published"))
 
 
@@ -42,9 +43,6 @@ class Post(models.Model):
         total number of likes on a post
         """
         return self.likes.count()
-
-    def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.slug:

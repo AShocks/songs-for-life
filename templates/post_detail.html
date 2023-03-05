@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="post_detail mt-3 mb-3">
+    <div class="post-detail mt-3 mb-3">
         <div class="container">
             <div class="row g-0">
                 <div class="card-body">
@@ -36,9 +36,9 @@
                     {% if user.id == post.author.id %}
                     <div class="row mt-3 mb-3">
                         <div class="d-grid gap d-md-flex">
-                            <a class="btn-success right" href="{% 'post_update' post.slug %}">
+                            <a class="btn-success right" href="{% 'update_post' post.slug %}">
                                 role=<button>Edit</button></a>
-                            <a class="btn-danger right" href="{% 'post_delete' post.slug %}">
+                            <a class="btn-danger right" href="{% 'delete_post' post.slug %}">
                                 role=<button>Delete</button></a>
                         </div>   
                     </div>

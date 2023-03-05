@@ -24,10 +24,10 @@ class PostList(generic.ListView):
     model = Post
     queryset = Post.objects.filter(status=1).order_by("-created_on")
     template_name = 'post_list.html'
-    
+    paginate_by = 6
 
 
-class PostDetail(LoginRequiredMixin, View):
+class PostDetail(View):
     """ Displays the PostDetail views """
 
     def get(self, request, slug, *args, **kwargs):
@@ -159,4 +159,4 @@ class DeletePost(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         """ function to display the message after the post is deleted """
         messages.success(self.request, self.success_message)
-        return super().delete(request, *args, **kwargs)
+        return super(DeletePost, self).delete(request, *args, **kwargs)
