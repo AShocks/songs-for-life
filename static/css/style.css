@@ -29,6 +29,17 @@ main {
     background-color: #F9FAFC;
 }
 
+.hero_image{
+    display: flex;
+    height: 80vh;
+    
+    position: relative;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
 
 /* Postlist images */
 
