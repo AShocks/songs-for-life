@@ -38,6 +38,15 @@ class Post(models.Model):
         """
         return self.title
 
+    def get_absolute_url(self):
+        return reverse("article_detail", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
+
     def number_of_likes(self):
         """
         total number of likes on a post
